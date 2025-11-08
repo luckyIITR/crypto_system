@@ -47,8 +47,12 @@ For a runnable example see `examples/place_order.py`.
 - `place_bracket_order(...)` / `edit_bracket_order(...)`
 - `cancel_all_orders(...)`
 - `get_order(order_id)`
+- `get_order_history(...)`
 - `change_order_leverage(product_id, leverage=...)`
 - `get_order_leverage(product_id)`
+- `get_positions(...)` / `get_margined_positions(...)`
+- `set_position_auto_topup(...)` / `change_position_margin(...)`
+- `close_all_positions(...)`
 
-See `docs/orders.md` for detailed endpoint walkthroughs and payload examples.
+See `docs/orders.md`, `docs/positions.md`, and `docs/trade_history.md` for detailed endpoint walkthroughs and payload examples.
 

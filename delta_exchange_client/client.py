@@ -307,6 +307,13 @@ class DeltaExchangeClient:
         response = self._request("GET", f"/v2/orders/{order_id}")
         return self._extract_json(response)
 
+    def get_order_history(self, **filters: Any) -> Any:
+        """
+        Retrieve historical orders, including cancelled and closed ones.
+        """
+        response = self._request("GET", "/v2/orders/history", params=filters or None)
+        return self._extract_json(response)
+
     def change_order_leverage(
         self, product_id: Union[int, str], *, leverage: Union[int, float]
     ) -> Any:
@@ -325,5 +332,83 @@ class DeltaExchangeClient:
         """
         response = self._request(
             "GET", f"/v2/products/{product_id}/orders/leverage"
+        )
+        return self._extract_json(response)
+
+    def get_margined_positions(self, **filters: Any) -> Any:
+        """
+        Retrieve positions that are using cross margin.
+        """
+        response = self._request(
+            "GET", "/v2/positions/margined", params=filters or None
+        )
+        return self._extract_json(response)
+
+    def get_positions(self, **filters: Any) -> Any:
+        """
+        Retrieve account positions, optionally filtered by product.
+        """
+        response = self._request("GET", "/v2/positions", params=filters or None)
+        return self._extract_json(response)
+
+    def get_position(self, product_id: Union[int, str]) -> Any:
+        """
+        Retrieve a single position for the given product id.
+        """
+        response = self._request(
+            "GET", "/v2/positions", params={"product_id": product_id}
+        )
+        return self._extract_json(response)
+
+    def set_position_auto_topup(
+        self, product_id: Union[int, str], *, auto_topup: Union[bool, str]
+    ) -> Any:
+        """
+        Enable or disable auto top-up for a product position.
+        """
+        payload = {
+            "product_id": product_id,
+            "auto_topup": auto_topup,
+        }
+        response = self._request(
+            "PUT", "/v2/positions/auto_topup", data=payload
+        )
+        return self._extract_json(response)
+
+    def change_position_margin(
+        self, product_id: Union[int, str], *, delta_margin: Union[str, int, float]
+    ) -> Any:
+        """
+        Add or remove margin from a product position.
+        """
+        payload = {
+            "product_id": product_id,
+            "delta_margin": delta_margin,
+        }
+        response = self._request(
+            "POST", "/v2/positions/change_margin", data=payload
+        )
+        return self._extract_json(response)
+
+    def close_all_positions(
+        self,
+        *,
+        close_all_portfolio: Optional[bool] = None,
+        close_all_isolated: Optional[bool] = None,
+        user_id: Optional[Union[int, str]] = None,
+    ) -> Any:
+        """
+        Close all open positions for the account.
+        """
+        payload: Dict[str, Any] = {}
+        if close_all_portfolio is not None:
+            payload["close_all_portfolio"] = close_all_portfolio
+        if close_all_isolated is not None:
+            payload["close_all_isolated"] = close_all_isolated
+        if user_id is not None:
+            payload["user_id"] = user_id
+
+        response = self._request(
+            "POST", "/v2/positions/close_all", data=payload or None
         )
         return self._extract_json(response)
