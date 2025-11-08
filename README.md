@@ -50,9 +50,11 @@ For a runnable example see `examples/place_order.py`.
 - `get_order_history(...)`
 - `change_order_leverage(product_id, leverage=...)`
 - `get_order_leverage(product_id)`
+- `get_historical_candles(...)`
+- `get_sparklines(...)`
 - `get_positions(...)` / `get_margined_positions(...)`
 - `set_position_auto_topup(...)` / `change_position_margin(...)`
 - `close_all_positions(...)`
 
-See `docs/orders.md`, `docs/positions.md`, and `docs/trade_history.md` for detailed endpoint walkthroughs and payload examples.
+See `docs/orders.md`, `docs/positions.md`, `docs/trade_history.md`, and `docs/history.md` for detailed endpoint walkthroughs and payload examples.
 

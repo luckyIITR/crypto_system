@@ -335,6 +335,47 @@ class DeltaExchangeClient:
         )
         return self._extract_json(response)
 
+    def get_historical_candles(
+        self,
+        *,
+        resolution: str,
+        symbol: str,
+        start: Union[int, str],
+        end: Union[int, str],
+        **filters: Any,
+    ) -> Any:
+        """
+        Retrieve historical OHLC candles for a symbol.
+        """
+        params: Dict[str, Any] = {
+            "resolution": resolution,
+            "symbol": symbol,
+            "start": start,
+            "end": end,
+        }
+        params.update(filters)
+        response = self._request(
+            "GET", "/v2/history/candles", params=params
+        )
+        return self._extract_json(response)
+
+    def get_sparklines(self, *, symbols: Union[str, list[str]], **filters: Any) -> Any:
+        """
+        Retrieve sparklines for one or more symbols.
+        """
+        if isinstance(symbols, (list, tuple, set)):
+            symbols_query = ",".join(symbols)
+        else:
+            symbols_query = symbols
+
+        params: Dict[str, Any] = {"symbols": symbols_query}
+        params.update(filters)
+
+        response = self._request(
+            "GET", "/v2/history/sparklines", params=params
+        )
+        return self._extract_json(response)
+
     def get_margined_positions(self, **filters: Any) -> Any:
         """
         Retrieve positions that are using cross margin.
