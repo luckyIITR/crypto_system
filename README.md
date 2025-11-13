@@ -58,3 +58,35 @@ For a runnable example see `examples/place_order.py`.
 
 See `docs/orders.md`, `docs/positions.md`, `docs/trade_history.md`, and `docs/history.md` for detailed endpoint walkthroughs and payload examples.
 
+## API Server
+
+The project includes a FastAPI server for placing risk-managed orders via REST API.
+
+### Start the API Server
+
+```bash
+python run_api.py
+```
+
+The API will be available at `http://localhost:8000`
+
+### API Documentation
+
+- **Interactive Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+- **Full API Documentation**: See `docs/api.md`
+
+### Quick API Example
+
+```bash
+# Place a BUY order
+curl -X POST "http://localhost:8000/api/v1/orders/buy" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_symbol": "BTCUSD",
+    "risk_per_trade": 100.0
+  }'
+```
+
+For complete API documentation, see `docs/api.md`.
+
