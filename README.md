@@ -90,3 +90,27 @@ curl -X POST "http://localhost:8000/api/v1/orders/buy" \
 
 For complete API documentation, see `docs/api.md`.
 
+## Frontend Application
+
+The project includes a Next.js frontend application for placing orders via a web interface.
+
+### Start the Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will be available at `http://localhost:3000`
+
+### Frontend Features
+
+- Modern, responsive UI
+- BUY/SELL order placement forms
+- Real-time order results display
+- Calculated values visualization
+- Error handling and loading states
+
+See `frontend/README.md` for detailed frontend documentation.
+
